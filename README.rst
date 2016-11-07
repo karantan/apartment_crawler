@@ -13,7 +13,11 @@ Features
 Installation
 ------------
 Install $project by running:
-    install project
+    `make`
+
+Run crowlers e.g.:
+	`cd apartment_crawler`
+	`scrapy crawl nepremicnine -s LOG_FILE=nepremicnine.log`
 Contribute
 ----------
 - Issue Tracker: github.com/karantan/apartment_crawler/issues

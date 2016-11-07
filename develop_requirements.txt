@@ -1,0 +1,3 @@
+isort
+ipython
+ipdb

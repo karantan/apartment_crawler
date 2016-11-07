@@ -1,21 +1,45 @@
-# -*- coding: utf-8 -*-
-import scrapy
+from apartment_crawler import settings
+from apartment_crawler.items import ApartmentItem
+from pyquery import PyQuery as pq
+from raven import Client
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+from scrapy.spiders import CrawlSpider
+from scrapy.spiders import Rule
+from apartment_crawler.crawler_settings import bolha_urls
+
+client = Client(settings.SENTRY_DSN)
 
 
 class BolhaSpider(CrawlSpider):
     name = 'bolha'
-    allowed_domains = ['bolha.net']
-    start_urls = ['http://bolha.net/']
+    allowed_domains = ['bolha.com']
+    start_urls = bolha_urls
 
     rules = (
-        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
+        Rule(
+            LinkExtractor(restrict_xpaths=(
+                '//div[@id="toolBox-top"]//a[@class="forward"]')),
+            follow=True,
+        ),
+        Rule(
+            LinkExtractor(restrict_xpaths=(
+                '//div[@class="coloumn image"]')),
+            callback='parse_item',
+            follow=False,
+        ),
     )
 
     def parse_item(self, response):
-        i = {}
-        #i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()
-        #i['name'] = response.xpath('//div[@id="name"]').extract()
-        #i['description'] = response.xpath('//div[@id="description"]').extract()
-        return i
+        try:
+            i = ApartmentItem()
+            self.response = response
+            self.doc = pq(self.response.body)
+
+            i['name'] = self.doc(".ad h1").text()
+            i['price'] = self.doc(".price span").text()
+            i['url'] = self.response.url
+
+            return i
+        except Exception as e:
+            client.captureException()
+            raise e

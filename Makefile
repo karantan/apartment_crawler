@@ -11,9 +11,6 @@ build:
 clean:
 	@rm -rf env
 
-run:
-	@env/bin/scrapy crawl apartment
-
 sort:
-	@env/bin/isort -rc apartment
+	@env/bin/isort -rc -fas -sl apartment_crawler
 
