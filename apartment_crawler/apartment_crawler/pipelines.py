@@ -7,13 +7,13 @@ from apartment_crawler import settings
 from apartment_crawler.models import Apartment
 from apartment_crawler.models import create_tables
 from apartment_crawler.models import db_connect
-from raven import Client
 from sqlalchemy.orm import sessionmaker
 from mako.template import Template
 
 import requests
+import logging
 
-client = Client(settings.SENTRY_DSN)
+logger = logging.getLogger()
 
 
 def send_message(link):
@@ -29,45 +29,40 @@ def send_message(link):
             'text': 'Testing some Mailgun awesomness!',
             'html': email_template.render(link=link),
         })
-    resp.raise_for_status()
+    try:
+        resp.raise_for_status()
+    except Exception as e:
+        logger.error(e)
 
 
 class ApartmentCrawlerPipeline(object):
     def __init__(self):
         """Initializes database connection and sessionmaker."""
-        try:
-            engine = db_connect()
-            create_tables(engine)
-            self.Session = sessionmaker(bind=engine)
-        except Exception as e:
-            client.captureException()
-            raise e
+        engine = db_connect()
+        create_tables(engine)
+        self.Session = sessionmaker(bind=engine)
 
     def process_item(self, item, spider):
         """Save apartment in the database.
 
         This method is called for every item pipeline component.
         """
-        try:
-            session = self.Session()
-            apartment_exists = session.query(Apartment).filter_by(
-                url=item['url'])
+        session = self.Session()
+        apartment_exists = session.query(Apartment).filter_by(
+            url=item['url'])
 
-            if not apartment_exists.count():
-                apartment = Apartment(**item)
-                try:
-                    session.add(apartment)
-                    session.commit()
-                except:
-                    client.captureException()
-                    session.rollback()
-                    raise
-                finally:
-                    session.close()
+        if not apartment_exists.count():
+            apartment = Apartment(**item)
+            try:
+                session.add(apartment)
+                session.commit()
+            except Exception as e:
+                logger.error(e)
+                session.rollback()
+                raise
+            finally:
+                session.close()
 
-                send_message(item['url'])
+            send_message(item['url'])
 
-            return item
-        except Exception as e:
-            client.captureException()
-            raise e
+        return item

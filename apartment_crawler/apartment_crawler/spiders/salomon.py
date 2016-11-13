@@ -2,6 +2,10 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider
 from scrapy.spiders import Rule
 
+import logging
+
+logger = logging.getLogger()
+
 
 class SalomonSpider(CrawlSpider):
     name = 'salomon'

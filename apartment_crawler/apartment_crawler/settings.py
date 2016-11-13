@@ -1,4 +1,6 @@
 import os
+import logging
+from scrapy.utils.log import configure_logging
 
 # Scrapy settings for apartment_crawler project
 #
@@ -94,8 +96,48 @@ SENTRY_DSN = 'https://123456@sentry.io/123456'
 MAILGUN_API_KEY = 'secret'
 MAILGUN_DOMAIN = 'foo.xyz'
 RECEIVERS = ['foo@bar.com']
+LOG_SETTINGS = {
+    'version': 1,
+    'disable_existing_loggers': True,
+
+    'formatters': {
+        'console': {
+            'format': '[%(asctime)s][%(levelname)s] %(name)s '
+                      '%(filename)s:%(funcName)s:%(lineno)d | %(message)s',
+            'datefmt': '%H:%M:%S',
+            },
+        },
+
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+            },
+        'sentry': {
+            'level': 'DEBUG',
+            'class': 'raven.handlers.logging.SentryHandler',
+            'dsn': SENTRY_DSN,
+            },
+        },
+
+    'loggers': {
+        '': {
+            'handlers': ['console', 'sentry'],
+            'level': 'DEBUG',
+            'propagate': False,
+            },
+        'apartment_crawler': {
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
 
 try:
     from apartment_crawler.local_settings import *
 except ImportError:
     pass
+
+configure_logging(install_root_handler=False)
+logging.config.dictConfig(LOG_SETTINGS)
