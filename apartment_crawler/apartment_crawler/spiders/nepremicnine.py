@@ -16,10 +16,12 @@ class NepremicnineSpider(CrawlSpider):
     start_urls = nepremicnine_urls
 
     rules = (
-        Rule(
-            LinkExtractor(restrict_xpaths=('//div[@id="pagination"]/ul/li/a')),
-            follow=True,
-        ),
+        # NOTE: there is a bug on the page which ignores all filters. You need
+        #       to manually add direct filter links.
+        # Rule(
+        #     LinkExtractor(restrict_xpaths=('//div[@id="pagination"]/ul/li/a')),
+        #     follow=True,
+        # ),
         Rule(
             LinkExtractor(restrict_xpaths=('//a[@class="slika"]')),
             callback='parse_item',

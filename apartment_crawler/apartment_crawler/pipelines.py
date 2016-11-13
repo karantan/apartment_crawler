@@ -63,6 +63,7 @@ class ApartmentCrawlerPipeline(object):
             finally:
                 session.close()
 
+        if hasattr(spider, 'mode') and spider.mode == 'production':
             send_message(item['url'])
 
         return item

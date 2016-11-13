@@ -38,6 +38,12 @@ Run crowlers e.g.:
 
 	``scrapy crawl nepremicnine``
 
+Run crowlers in production mode:
+
+``scrapy crawl nepremicnine -a mode=production``
+
+Atm the only difference is that production mode will try to send emails.
+
 Contribute
 ----------
 - Issue Tracker: github.com/karantan/apartment_crawler/issues
