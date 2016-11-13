@@ -16,11 +16,15 @@ class NepremicnineSpider(CrawlSpider):
     start_urls = nepremicnine_urls
 
     rules = (
-        Rule(LinkExtractor(restrict_xpaths=('//div[@id="pagination"]/ul/li/a')),
-             follow=True),
-        Rule(LinkExtractor(restrict_xpaths=('//a[@class="slika"]')),
-             callback='parse_item',
-             follow=False),
+        Rule(
+            LinkExtractor(restrict_xpaths=('//div[@id="pagination"]/ul/li/a')),
+            follow=True,
+        ),
+        Rule(
+            LinkExtractor(restrict_xpaths=('//a[@class="slika"]')),
+            callback='parse_item',
+            follow=False,
+        ),
     )
 
     def parse_item(self, response):
@@ -28,8 +32,8 @@ class NepremicnineSpider(CrawlSpider):
         self.response = response
         self.doc = pq(self.response.body)
 
-        i['name'] = self.doc('#podrobnosti h1').text()
-        i['price'] = self.doc('.cena').text()
+        i['name'] = self.doc('#content h1').text()
+        i['price'] = self.doc('#podrobnosti .cena span').text()
         i['url'] = self.response.url
 
         return i

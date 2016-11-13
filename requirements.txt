@@ -2,6 +2,6 @@ scrapy
 pyquery
 sqlalchemy
 psycopg2
-raven=5.31.0
+raven
 requests
 mako
