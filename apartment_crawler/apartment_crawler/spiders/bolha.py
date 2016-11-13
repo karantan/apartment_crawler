@@ -33,9 +33,8 @@ class BolhaSpider(CrawlSpider):
         i = ApartmentItem()
         self.response = response
         self.doc = pq(self.response.body)
-
         i['name'] = self.doc(".ad h1").text()
-        i['price'] = self.doc(".price span").text()
+        i['price'] = self.doc(".price span")[0].text
         i['url'] = self.response.url
 
         return i

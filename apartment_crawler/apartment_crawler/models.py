@@ -28,7 +28,7 @@ class Apartment(Base):
     __tablename__ = 'apartment'
 
     id = Column(Integer, primary_key=True)
-    name = Column('name', Unicode(100), nullable=True)
+    name = Column('name', Unicode(250), nullable=True)
     url = Column('url', Unicode(250), nullable=False)
-    price = Column('price', Unicode(100), nullable=True)
+    price = Column('price', Unicode(250), nullable=True)
     created = Column('created', DateTime, default=datetime.utcnow)
