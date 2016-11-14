@@ -1,3 +1,4 @@
+*.pyc
 env/
 local_settings.py
 crawler_settings.py

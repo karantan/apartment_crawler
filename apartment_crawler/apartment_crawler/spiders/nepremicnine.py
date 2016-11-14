@@ -1,9 +1,9 @@
+from apartment_crawler.crawler_settings import nepremicnine_urls
 from apartment_crawler.items import ApartmentItem
 from pyquery import PyQuery as pq
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider
 from scrapy.spiders import Rule
-from apartment_crawler.crawler_settings import nepremicnine_urls
 
 import logging
 

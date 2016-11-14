@@ -7,11 +7,11 @@ from apartment_crawler import settings
 from apartment_crawler.models import Apartment
 from apartment_crawler.models import create_tables
 from apartment_crawler.models import db_connect
-from sqlalchemy.orm import sessionmaker
 from mako.template import Template
+from sqlalchemy.orm import sessionmaker
 
-import requests
 import logging
+import requests
 
 logger = logging.getLogger()
 
