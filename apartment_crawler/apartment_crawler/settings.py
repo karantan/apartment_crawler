@@ -1,6 +1,7 @@
-import os
-import logging
 from scrapy.utils.log import configure_logging
+
+import logging
+import os
 
 # Scrapy settings for apartment_crawler project
 #

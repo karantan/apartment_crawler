@@ -1,9 +1,11 @@
+from apartment_crawler.crawler_settings import bolha_urls
 from apartment_crawler.items import ApartmentItem
 from pyquery import PyQuery as pq
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider
 from scrapy.spiders import Rule
-from apartment_crawler.crawler_settings import bolha_urls
+from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 import logging
 
@@ -35,6 +37,8 @@ class BolhaSpider(CrawlSpider):
         self.doc = pq(self.response.body)
         i['name'] = self.doc(".ad h1").text()
         i['price'] = self.doc(".price span")[0].text
-        i['url'] = self.response.url
+        url = self.response.url
+        # NOTE: this strips URLs query which we don't want (?aclct=144906574')
+        i['url'] = urljoin(url, urlparse(url).path)
 
         return i
