@@ -91,12 +91,13 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+env = os.environ
+DATABASE = env.get('DATABASE_URL', 'sqlite:///apartment.db')
+SENTRY_DSN = env.get('SENTRY_DSN')
+MAILGUN_API_KEY = env.get('MAILGUN_API_KEY')
+MAILGUN_DOMAIN = env.get('MAILGUN_DOMAIN')
+RECEIVERS = env.get('RECEIVERS')
 
-DATABASE = 'sqlite:///apartment.db'
-SENTRY_DSN = 'https://123456@sentry.io/123456'
-MAILGUN_API_KEY = 'secret'
-MAILGUN_DOMAIN = 'foo.xyz'
-RECEIVERS = ['foo@bar.com']
 LOG_SETTINGS = {
     'version': 1,
     'disable_existing_loggers': True,
