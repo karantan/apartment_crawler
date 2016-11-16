@@ -24,7 +24,7 @@ def send_message(link):
         data={
             'from': 'Apartment Crawler <mailgun@{}>'.format(
                 settings.MAILGUN_DOMAIN),
-            'to': settings.RECEIVERS,
+            'to': [email.strip() for email in settings.RECEIVERS.split(',')],
             'subject': 'New apartment found',
             'text': 'Testing some Mailgun awesomness!',
             'html': email_template.render(link=link),
