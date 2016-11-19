@@ -14,3 +14,6 @@ clean:
 sort:
 	@env/bin/isort -rc -fas -sl apartment_crawler
 
+tests:
+	@env/bin/pytest apartment_crawler
+
