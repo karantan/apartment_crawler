@@ -117,7 +117,7 @@ LOG_SETTINGS = {
             'formatter': 'console'
             },
         'sentry': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'class': 'raven.handlers.logging.SentryHandler',
             'dsn': SENTRY_DSN,
             },
