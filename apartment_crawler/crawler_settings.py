@@ -3,7 +3,7 @@ bolha_urls = [
 ]
 
 nepremicnine_urls = [
-    'https://www.nepremicnine.net/oglasi-prodaja/cena-do-190000-eur,letnik-od-1970-do-2017/',
+    'https://www.nepremicnine.net/oglasi-prodaja/cena-do-190000-eur,letnik-od-1980-do-2017/',
 ]
 
 nepremicnine_filters = {
@@ -12,7 +12,7 @@ nepremicnine_filters = {
     'obcina': ['Ljubljana'],
     'regija': ['*'],  # wild card - it matches everything
     'vrsta': ['Stanovanje'],
-    'min_velikost': 50,
+    'min_velikost': 55,
     'max_velikost': 75,
 }
 
