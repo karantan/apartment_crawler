@@ -3,7 +3,7 @@ bolha_urls = [
 ]
 
 nepremicnine_urls = [
-    'https://www.nepremicnine.net/oglasi-prodaja/cena-do-190000-eur,letnik-od-1980-do-2017/',
+    'https://www.nepremicnine.net/oglasi-prodaja/cena-do-190000-eur/',
 ]
 
 nepremicnine_filters = {
