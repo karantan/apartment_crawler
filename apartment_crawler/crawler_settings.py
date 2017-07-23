@@ -3,7 +3,7 @@ bolha_urls = [
 ]
 
 nepremicnine_urls = [
-    'https://www.nepremicnine.net/oglasi-prodaja/cena-do-190000-eur/',
+    'https://www.nepremicnine.net/oglasi-prodaja/ljubljana-mesto/stanovanje/3-sobno/cena-od-140000-do-180000-eur/',
 ]
 
 nepremicnine_filters = {
